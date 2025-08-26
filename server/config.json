@@ -9,10 +9,10 @@
     },
     "settings": {
         "demo_mode": true,
-        "max_attack_duration": 90000000,
-        "max_concurrent_bots": 7000,
-        "fake_bots": 127,
-        "fake_attacks": 15038,
-        "fake_attacks_random_range": 975
+        "max_attack_duration": 60,
+        "max_concurrent_bots": 31,
+        "fake_bots": 0,
+        "fake_attacks": 0,
+        "fake_attacks_random_range": 0 
     }
 }
