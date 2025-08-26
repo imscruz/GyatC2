@@ -1,0 +1,50 @@
+.attack-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(255, 0, 255, 0.7);
+    animation: pulse 1s infinite alternate;
+}
+
+.attack-popup img {
+    max-width: 300px;
+    border: 3px solid #ff00ff;
+    border-radius: 5px;
+}
+
+.attack-popup h2 {
+    color: #ff00ff;
+    margin-top: 15px;
+    text-align: center;
+    font-size: 24px;
+    text-shadow: 0 0 10px #ff00ff;
+}
+
+.attack-popup .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+@keyframes pulse {
+    from {
+        box-shadow: 0 0 20px rgba(255, 0, 255, 0.7);
+    }
+    to {
+        box-shadow: 0 0 30px rgba(255, 0, 255, 1);
+    }
+}

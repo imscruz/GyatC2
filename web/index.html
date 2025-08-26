@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GYAT C2 - Login</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-header">
+            <h1>GYAT C2</h1>
+            <p class="subtitle">Catgirl Themed Stresser</p>
+        </div>
+        
+        <div class="login-form">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Enter username" value="root">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter password" value="root">
+            </div>
+            <button id="login-btn" class="btn btn-primary">Login</button>
+        </div>
+        
+        <div class="login-footer">
+            <p>© GYAT C2 - For Educational Purposes Only</p>
+        </div>
+    </div>
+    
+    <!-- Disclaimer Modal -->
+    <div id="disclaimer-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Legal Disclaimer</h2>
+            </div>
+            <div class="modal-body">
+                <p>This software (GYAT C2) is provided for educational purposes only. The creators and distributors of this software do not condone or support any illegal activities, including but not limited to unauthorized access to computer systems, networks, or data.</p>
+                
+                <p>By using this software, you agree:</p>
+                <ul>
+                    <li>To use it only for educational and research purposes</li>
+                    <li>To use it only on systems you own or have explicit permission to test</li>
+                    <li>To comply with all applicable laws and regulations</li>
+                    <li>To take full responsibility for any consequences resulting from your use of this software</li>
+                </ul>
+                
+                <p>The creators and distributors of this software are not responsible for any misuse, damage, or legal consequences resulting from the use of this software.</p>
+                
+                <div class="checkbox-container">
+                    <input type="checkbox" id="disclaimer-checkbox">
+                    <label for="disclaimer-checkbox">I have read and understand this disclaimer</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="close-disclaimer" class="btn btn-primary" disabled>Close</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/login.js"></script>
+</body>
+</html>
