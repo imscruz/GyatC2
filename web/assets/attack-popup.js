@@ -17,12 +17,12 @@ function showAttackPopup() {
     
     // GIF ekle
     const gif = document.createElement('img');
-    gif.src = 'attack.gif';
+    gif.src = '/web/assets/attack.gif';
     gif.alt = 'GYAT C2 Attack GIF';
     
     // Başlık ekle
     const title = document.createElement('h2');
-    title.textContent = 'ATTACK BAŞLATILDI!';
+    title.textContent = 'DDOSING NIGGASS!';
     
     // Elementleri popup'a ekle
     popup.appendChild(closeBtn);
@@ -37,5 +37,5 @@ function showAttackPopup() {
         if (document.body.contains(popup)) {
             document.body.removeChild(popup);
         }
-    }, 5000);
+    }, 8000);
 }
