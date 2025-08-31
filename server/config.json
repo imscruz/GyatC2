@@ -10,9 +10,9 @@
     "settings": {
         "demo_mode": true,
         "max_attack_duration": 60,
-        "max_concurrent_bots": 31,
+        "max_concurrent_bots": 1,
         "fake_bots": 0,
         "fake_attacks": 0,
-        "fake_attacks_random_range": 0 
+        "fake_attacks_random_range": 0
     }
 }
