@@ -1,4 +1,4 @@
-# 🕷️ GYAT-C2
+# 🕷️ GYAT-C2 | YO PLEASE SPONSORSHIP FOR ME 😭
 
 > *The most powerfull! botnet C2 that controls exactly **infinity** devices.*  
 
