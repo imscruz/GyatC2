@@ -17,6 +17,96 @@ class Colors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
+# Kullanıcı yönetimi için sınıf
+class UserManager:
+    def __init__(self):
+        self.users_file = 'users.json'
+        self.users = self.load_users()
+        
+    def load_users(self):
+        try:
+            with open(self.users_file, 'r') as f:
+                return json.load(f)
+        except FileNotFoundError:
+            # Varsayılan root kullanıcısı oluştur
+            default_users = {
+                "root": {
+                    "password": "root",
+                    "is_admin": True,
+                    "max_concurrency": 10,
+                    "max_seconds": 600,
+                    "is_banned": False
+                }
+            }
+            self.save_users(default_users)
+            return default_users
+    
+    def save_users(self, users=None):
+        if users is None:
+            users = self.users
+        with open(self.users_file, 'w') as f:
+            json.dump(users, f, indent=4)
+    
+    def authenticate(self, username, password):
+        if username in self.users and self.users[username]["password"] == password:
+            if self.users[username]["is_banned"]:
+                return False, "User is banned"
+            return True, "Authentication successful"
+        return False, "Invalid username or password"
+    
+    def add_user(self, username, password, max_concurrency=5, max_seconds=300, is_admin=False):
+        if username in self.users:
+            return False, "Username already exists"
+        
+        self.users[username] = {
+            "password": password,
+            "is_admin": is_admin,
+            "max_concurrency": max_concurrency,
+            "max_seconds": max_seconds,
+            "is_banned": False
+        }
+        self.save_users()
+        log(f"New user created: {username}", "SUCCESS")
+        return True, "User created successfully"
+    
+    def update_user(self, username, max_concurrency=None, max_seconds=None):
+        if username not in self.users:
+            return False, "User does not exist"
+        
+        if max_concurrency is not None:
+            self.users[username]["max_concurrency"] = max_concurrency
+        
+        if max_seconds is not None:
+            self.users[username]["max_seconds"] = max_seconds
+        
+        self.save_users()
+        log(f"User updated: {username}", "SUCCESS")
+        return True, "User updated successfully"
+    
+    def ban_user(self, username):
+        if username not in self.users:
+            return False, "User does not exist"
+        
+        if username == "root":
+            return False, "Cannot ban root user"
+        
+        self.users[username]["is_banned"] = True
+        self.save_users()
+        log(f"User banned: {username}", "WARNING")
+        return True, "User banned successfully"
+    
+    def unban_user(self, username):
+        if username not in self.users:
+            return False, "User does not exist"
+        
+        self.users[username]["is_banned"] = False
+        self.save_users()
+        log(f"User unbanned: {username}", "SUCCESS")
+        return True, "User unbanned successfully"
+    
+    def get_all_users(self):
+        return self.users
+
 # Yapılandırma dosyasını yükle
 def load_config():
     try:

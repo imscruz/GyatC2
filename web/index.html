@@ -3,64 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GYAT C2 - Login</title>
+    <title>GYAT C2 - Home</title>
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .home-page {
+            background: linear-gradient(135deg, #ffcce6, #ff9ed2);
+            min-height: 100vh;
+            background-image: url('../web/assets/catgirl-bg.svg');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo h1 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin: 0;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .hero-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 1rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2rem;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 2rem 5%;
+        }
+        
+        .gallery-item {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .gallery-caption {
+            padding: 1rem;
+            text-align: center;
+            color: var(--dark-color);
+        }
+        
+        .footer {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+    </style>
 </head>
-<body class="login-page">
-    <div class="login-container">
-        <div class="login-header">
+<body class="home-page">
+    <nav class="navbar">
+        <div class="logo">
             <h1>GYAT C2</h1>
-            <p class="subtitle">Catgirl Themed Stresser</p>
         </div>
-        
-        <div class="login-form">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" placeholder="Enter username" value="root">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Enter password" value="root">
-            </div>
-            <button id="login-btn" class="btn btn-primary">Login</button>
+        <div class="nav-buttons">
+            <a href="login.html" class="btn btn-primary">Login</a>
+            <a href="register.html" class="btn btn-primary">Register</a>
         </div>
-        
-        <div class="login-footer">
-            <p>© GYAT C2 - For Educational Purposes Only</p>
-        </div>
-    </div>
+    </nav>
     
-    <!-- Disclaimer Modal -->
-    <div id="disclaimer-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Legal Disclaimer</h2>
-            </div>
-            <div class="modal-body">
-                <p>This software (GYAT C2) is provided for educational purposes only. The creators and distributors of this software do not condone or support any illegal activities, including but not limited to unauthorized access to computer systems, networks, or data.</p>
-                
-                <p>By using this software, you agree:</p>
-                <ul>
-                    <li>To use it only for educational and research purposes</li>
-                    <li>To use it only on systems you own or have explicit permission to test</li>
-                    <li>To comply with all applicable laws and regulations</li>
-                    <li>To take full responsibility for any consequences resulting from your use of this software</li>
-                </ul>
-                
-                <p>The creators and distributors of this software are not responsible for any misuse, damage, or legal consequences resulting from the use of this software.</p>
-                
-                <div class="checkbox-container">
-                    <input type="checkbox" id="disclaimer-checkbox">
-                    <label for="disclaimer-checkbox">I have read and understand this disclaimer</label>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button id="close-disclaimer" class="btn btn-primary" disabled>Close</button>
+    <section class="hero-section">
+        <h1 class="hero-title">Welcome to GYAT C2</h1>
+        <p class="hero-subtitle">The Ultimate Catgirl Themed Experience</p>
+    </section>
+    
+    <section class="gallery">
+        <div class="gallery-item">
+            <img src="https://i.pinimg.com/originals/f4/ed/18/f4ed18e4f8c07a1688153de3e5d2847e.jpg" alt="Catgirl 1">
+            <div class="gallery-caption">
+                <h3>Neko Power</h3>
+                <p>Unleash the power of catgirls</p>
             </div>
         </div>
-    </div>
+        <div class="gallery-item">
+            <img src="https://i.pinimg.com/originals/e4/8d/17/e48d17f61d0ebb15d0f56855e9949131.jpg" alt="Catgirl 2">
+            <div class="gallery-caption">
+                <h3>Kawaii Control</h3>
+                <p>Take control with cuteness</p>
+            </div>
+        </div>
+        <div class="gallery-item">
+            <img src="https://i.pinimg.com/originals/e3/65/9a/e3659a6fb31d8182a539ea81a2a6ecfa.jpg" alt="Catgirl 3">
+            <div class="gallery-caption">
+                <h3>Neko Magic</h3>
+                <p>Experience the magic of nekos</p>
+            </div>
+        </div>
+    </section>
     
-    <script src="js/login.js"></script>
+    <footer class="footer">
+        <p>Made by SCRUZ @ GYATC2</p>
+        <p>© GYAT C2 - For Educational Purposes Only</p>
+    </footer>
 </body>
 </html>
